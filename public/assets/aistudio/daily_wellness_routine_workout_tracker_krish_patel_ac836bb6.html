@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Wellness Routine & Workout Tracker • Krish Patel</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Ambient LED Edge Lighting Styles */
+    @keyframes led-pulse {
+      0%, 100% {
+        opacity: 0.6;
+        box-shadow: inset 0 0 35px 8px var(--glow-color, rgba(245, 158, 11, 0.5)),
+                    0 0 40px 10px var(--glow-color, rgba(245, 158, 11, 0.4));
+      }
+      50% {
+        opacity: 0.95;
+        box-shadow: inset 0 0 60px 18px var(--glow-color, rgba(245, 158, 11, 0.7)),
+                    0 0 65px 20px var(--glow-color, rgba(245, 158, 11, 0.6));
+      }
+    }
+
+    @keyframes aurora-flow {
+      0% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(90deg); }
+      100% { filter: hue-rotate(0deg); }
+    }
+
+    .led-active-screen {
+      animation: led-pulse 5s ease-in-out infinite, aurora-flow 12s ease-in-out infinite;
+    }
+
+    /* JARVIS Arc Reactor & Audio Wave Animations */
+    @keyframes arc-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .arc-reactor-ring {
+      animation: arc-spin 10s linear infinite;
+    }
+
+    .arc-reactor-core {
+      animation: led-pulse 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body id="app-body" class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen p-4 sm:p-6 lg:p-8 flex justify-center transition-colors duration-300 relative overflow-x-hidden">
+
+  <!-- Screen Perimeter LED Edge Glow (Active when toggled) -->
+  <div id="led-screen-overlay" class="hidden pointer-events-none fixed inset-0 z-50 transition-all duration-500"></div>
+
+  <main id="main-card" class="w-full max-w-xl bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6 transition-all duration-500 relative z-10">
+    
+    <!-- Top Utility Bar: Profile, LED Light, & Theme Toggle -->
+    <div class="flex flex-wrap items-center justify-between text-xs pb-2 border-b border-slate-100 dark:border-slate-800 gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="inline-block px-2.5 py-1 text-[11px] font-semibold tracking-wide text-cyan-800 bg-cyan-50 dark:bg-cyan-950/70 dark:text-cyan-300 rounded-full flex items-center space-x-1.5 border border-cyan-200 dark:border-cyan-800">
+          <span class="w-2 h-2 rounded-full bg-cyan-500 animate-ping"></span>
+          <span id="user-profile-badge">Krish Patel's Protocol</span>
+        </span>
+      </div>
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <!-- LED Edge Light Toggle Button -->
+        <button id="led-toggle-btn" class="px-2 py-1 rounded-md text-xs font-medium text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition flex items-center space-x-1 border border-amber-200 dark:border-amber-800/80">
+          <span id="led-icon">✨</span>
+          <span id="led-btn-text">LED Light: Off</span>
+        </button>
+
+        <!-- Save to Phone Guide Button -->
+        <button id="install-guide-btn" class="px-2 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+          <span>📱</span>
+          <span>Save to Phone</span>
+        </button>
+
+        <!-- Dark / Light Mode Toggle -->
+        <button id="theme-toggle-btn" class="px-2 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-text">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- J.A.R.V.I.S. Voice AI Assistant Module (Personalized for Krish Patel) -->
+    <section class="bg-gradient-to-r from-slate-950 via-cyan-950/90 to-slate-950 text-white rounded-xl p-4 sm:p-5 border border-cyan-800/60 shadow-[0_0_20px_rgba(6,182,212,0.15)] relative overflow-hidden space-y-3.5">
+      <!-- Background HUD Lines -->
+      <div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full border border-cyan-500/20 pointer-events-none"></div>
+
+      <div class="flex items-start justify-between relative z-10">
+        <div class="flex items-center space-x-3">
+          <!-- Animated Arc Reactor Orb -->
+          <div class="relative w-11 h-11 flex items-center justify-center">
+            <div class="arc-reactor-ring absolute inset-0 rounded-full border-2 border-dashed border-cyan-400"></div>
+            <div class="w-7 h-7 rounded-full bg-cyan-500/30 border border-cyan-300 arc-reactor-core flex items-center justify-center shadow-[0_0_12px_rgba(6,182,212,0.8)]">
+              <span class="text-xs">🤖</span>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h2 class="text-xs font-bold uppercase tracking-wider text-cyan-400">J.A.R.V.I.S. Assistant</h2>
+              <span id="jarvis-pulse" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            </div>
+            <p id="jarvis-status-text" class="text-[11px] text-cyan-200/80 font-mono mt-0.5">Assigned to: Krish Patel</p>
+          </div>
+        </div>
+
+        <!-- Voice Toggle & Re-greet -->
+        <div class="flex items-center space-x-2">
+          <button id="jarvis-greet-btn" class="px-2.5 py-1 rounded bg-cyan-900/60 hover:bg-cyan-800/80 border border-cyan-700/60 text-cyan-200 text-xs font-medium transition flex items-center space-x-1">
+            <span>🔊</span>
+            <span>Greet Sir</span>
+          </button>
+          <button id="jarvis-voice-toggle" class="px-2.5 py-1 rounded bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-medium transition">Voice: On</button>
+        </div>
+      </div>
+
+      <!-- Dialogue Subtitle Display -->
+      <div class="p-3 rounded-lg bg-black/40 border border-cyan-500/30 font-mono text-xs text-cyan-100 flex items-start space-x-2">
+        <span class="text-cyan-400 font-bold shrink-0">&gt;</span>
+        <p id="jarvis-dialogue" class="leading-relaxed">"Welcome Krish sir. All systems initialized for your morning session. How may I assist you today?"</p>
+      </div>
+
+      <!-- Quick Command Buttons for JARVIS -->
+      <div class="space-y-1.5 pt-1">
+        <div class="flex items-center justify-between text-[11px] text-cyan-300/80">
+          <span>Voice Commands & Quick Protocols:</span>
+          <button id="mic-listen-btn" class="text-cyan-400 hover:text-cyan-300 flex items-center space-x-1 font-semibold">
+            <span id="mic-icon">🎙️</span>
+            <span id="mic-text">Speak Command</span>
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <button data-cmd="meditation" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Start 5:00 AM Meditation"</button>
+          <button data-cmd="yoga" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Start Sunrise Yoga"</button>
+          <button data-cmd="workout" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Brief Today's Workout"</button>
+          <button data-cmd="water" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Log 5:00 AM Water"</button>
+          <button data-cmd="light" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Turn on LED Edge Glow"</button>
+          <button data-cmd="music" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Play 432Hz Zen Audio"</button>
+          <button data-cmd="status" class="jarvis-cmd-chip text-[11px] px-2.5 py-1 rounded-md bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-700/50 text-cyan-200 transition">"Report Routine Status"</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workout Split Selector (Krish's 6-Day Program) -->
+    <section class="border border-indigo-200 dark:border-indigo-900/60 rounded-xl p-4 bg-gradient-to-r from-indigo-50/60 via-slate-50 to-indigo-50/60 dark:from-indigo-950/30 dark:via-slate-900 dark:to-indigo-950/30 space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-sm">🏋️</span>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-300">Workout Split Schedule (2x Weekly)</h2>
+        </div>
+        <span id="current-split-tag" class="text-[11px] px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 font-bold">Back & Biceps</span>
+      </div>
+
+      <!-- Split Day Selector Pills -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
+        <button data-split="back-biceps" class="split-btn px-2.5 py-2 rounded-lg border font-medium text-center transition bg-indigo-600 text-white border-indigo-600 shadow-sm">
+          <div class="font-bold text-[11px]">Mon & Thu</div>
+          <div class="text-[10px] opacity-90">Back & Biceps</div>
+        </button>
+        <button data-split="chest-triceps" class="split-btn px-2.5 py-2 rounded-lg border font-medium text-center transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-indigo-50">
+          <div class="font-bold text-[11px]">Tue & Fri</div>
+          <div class="text-[10px] opacity-90">Chest & Triceps</div>
+        </button>
+        <button data-split="legs-shoulders" class="split-btn px-2.5 py-2 rounded-lg border font-medium text-center transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-indigo-50">
+          <div class="font-bold text-[11px]">Wed & Sat</div>
+          <div class="text-[10px] opacity-90">Legs & Shoulders</div>
+        </button>
+        <button data-split="sunday-rest" class="split-btn px-2.5 py-2 rounded-lg border font-medium text-center transition bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-indigo-50">
+          <div class="font-bold text-[11px]">Sunday</div>
+          <div class="text-[10px] opacity-90">Active Recovery</div>
+        </button>
+      </div>
+    </section>
+
+    <!-- Weekly Discipline Heatmap & Habit Consistency Grid -->
+    <section class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50/70 dark:bg-slate-900/60 space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-sm">📊</span>
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">Weekly Consistency & Discipline Grid</h2>
+        </div>
+        <span class="text-[11px] text-slate-500 font-medium">This Week: <strong id="weekly-score" class="text-emerald-600 dark:text-emerald-400">85% Complete</strong></span>
+      </div>
+
+      <!-- 7-Day Badges -->
+      <div id="weekly-days-grid" class="grid grid-cols-7 gap-1.5 text-center">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="flex justify-between items-center text-[11px] text-slate-500 dark:text-slate-400 pt-1 border-t border-slate-200/60 dark:border-slate-800">
+        <span>🧘 Mindful: <strong id="total-med-mins" class="text-slate-800 dark:text-slate-200">120 mins</strong></span>
+        <span>💪 Workout: <strong id="total-workout-mins" class="text-slate-800 dark:text-slate-200">180 mins</strong></span>
+        <span>🔥 Best Streak: <strong class="text-amber-600 dark:text-amber-400">7 Days</strong></span>
+      </div>
+    </section>
+
+    <!-- 5:00 AM Morning Hydration Tracker -->
+    <section class="border border-sky-200 dark:border-sky-900/60 rounded-xl p-4 bg-gradient-to-r from-sky-50/70 via-blue-50/40 to-sky-50/70 dark:from-sky-950/30 dark:via-slate-900 dark:to-sky-950/30 space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-base">💧</span>
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-sky-900 dark:text-sky-300">5:00 AM Morning & Daily Hydration</h2>
+            <p class="text-[11px] text-sky-700 dark:text-sky-400">Essential 500ml glass before morning meditation & yoga</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <span id="water-amount-text" class="text-sm font-bold text-sky-700 dark:text-sky-400">1.0L</span>
+          <span class="text-[10px] text-sky-600/80 dark:text-sky-500 block">/ 2.5L Goal</span>
+        </div>
+      </div>
+
+      <!-- Interactive Water Glasses Icons -->
+      <div id="water-glasses-row" class="flex items-center justify-between gap-1 py-1">
+        <!-- 8-10 Glass clickable icons rendered dynamically -->
+      </div>
+
+      <!-- Water Controls -->
+      <div class="flex items-center justify-between text-xs pt-1">
+        <div class="flex items-center space-x-2">
+          <button id="add-water-btn" class="px-3 py-1 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-medium text-xs transition flex items-center space-x-1 shadow-sm active:scale-95">
+            <span>+</span>
+            <span>Add Glass (250ml)</span>
+          </button>
+          <button id="remove-water-btn" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-sky-300 dark:border-sky-800 text-sky-800 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-slate-700 text-xs transition">
+            - Undo
+          </button>
+        </div>
+        <span id="water-status-tip" class="text-[11px] text-sky-800 dark:text-sky-300 font-medium">4 of 10 glasses</span>
+      </div>
+    </section>
+
+    <!-- LED Lighting Mode Selector (Collapsible) -->
+    <div id="led-controls-panel" class="hidden p-3.5 rounded-xl bg-gradient-to-r from-amber-50/70 via-orange-50/50 to-amber-50/70 dark:from-amber-950/40 dark:via-slate-900 dark:to-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 space-y-2.5 text-xs">
+      <div class="flex items-center justify-between">
+        <span class="font-semibold text-amber-900 dark:text-amber-200 flex items-center space-x-1.5">
+          <span>💡</span>
+          <span>Ambient LED Edge Mood & Breathing Light</span>
+        </span>
+        <span class="text-[10px] text-amber-700 dark:text-amber-400">Syncs with 5:00 AM vibe</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <button data-color="rgba(245, 158, 11, 0.65)" data-name="Sunrise Gold" class="led-preset-btn px-2.5 py-1.5 rounded-lg border border-amber-300 dark:border-amber-700 bg-white/90 dark:bg-slate-800 text-amber-800 dark:text-amber-200 font-medium text-center hover:scale-[1.02] transition">🌅 Sunrise Gold</button>
+        <button data-color="rgba(16, 185, 129, 0.65)" data-name="Zen Emerald" class="led-preset-btn px-2.5 py-1.5 rounded-lg border border-emerald-300 dark:border-emerald-700 bg-white/90 dark:bg-slate-800 text-emerald-800 dark:text-emerald-200 font-medium text-center hover:scale-[1.02] transition">🧘 Zen Emerald</button>
+        <button data-color="rgba(14, 165, 233, 0.65)" data-name="Calm Cyan" class="led-preset-btn px-2.5 py-1.5 rounded-lg border border-sky-300 dark:border-sky-700 bg-white/90 dark:bg-slate-800 text-sky-800 dark:text-sky-200 font-medium text-center hover:scale-[1.02] transition">🌊 Calm Breath</button>
+        <button data-color="rgba(168, 85, 247, 0.65)" data-name="Cosmic Violet" class="led-preset-btn px-2.5 py-1.5 rounded-lg border border-purple-300 dark:border-purple-700 bg-white/90 dark:bg-slate-800 text-purple-800 dark:text-purple-200 font-medium text-center hover:scale-[1.02] transition">🌌 Aurora Violet</button>
+      </div>
+      <p class="text-[11px] text-amber-700/80 dark:text-amber-400/80 text-center">Gentle edge pulse expands and contracts with a 4-second breathing pace for meditation.</p>
+    </div>
+
+    <!-- Phone Install Modal / Drawer (Hidden by default) -->
+    <div id="install-modal" class="hidden p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-xs space-y-3">
+      <div class="flex items-center justify-between">
+        <h4 class="font-bold text-indigo-900 dark:text-indigo-200 flex items-center space-x-1.5 text-sm">
+          <span>📲</span>
+          <span>How to Run as a Phone App</span>
+        </h4>
+        <button id="close-install-modal-btn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-bold p-1">✕</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700 dark:text-slate-300">
+        <div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-indigo-100 dark:border-indigo-900/60">
+          <p class="font-semibold text-indigo-800 dark:text-indigo-300 mb-1">🍎 iPhone / iPad (Safari)</p>
+          <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
+            <li>Open this page in Safari.</li>
+            <li>Tap the <strong>Share</strong> button (box with up arrow).</li>
+            <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+            <li>Tap <strong>Add</strong>: it launches without browser bars!</li>
+          </ol>
+        </div>
+        <div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-indigo-100 dark:border-indigo-900/60">
+          <p class="font-semibold text-indigo-800 dark:text-indigo-300 mb-1">🤖 Android (Chrome)</p>
+          <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-600 dark:text-slate-400">
+            <li>Open this page in Google Chrome.</li>
+            <li>Tap the <strong>three dots</strong> menu (top right).</li>
+            <li>Tap <strong>Install App</strong> or <strong>Add to Home screen</strong>.</li>
+            <li>Open directly from your app drawer or home screen.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="border-b border-slate-100 dark:border-slate-800 pb-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Daily Wellness Routine</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">5:00 AM rituals, timed meditation & 6-day split workouts.</p>
+        </div>
+        <div class="text-right">
+          <!-- Streak Badge -->
+          <div class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-bold mb-1">
+            <span>🔥</span>
+            <span id="streak-count">1 Day Streak</span>
+          </div>
+          <div id="progress-percent" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0%</div>
+          <div class="text-xs text-slate-400 dark:text-slate-500">completed</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2.5 mt-4 overflow-hidden">
+        <div id="progress-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+      <div class="flex justify-between items-center text-xs text-slate-400 dark:text-slate-500 mt-1.5">
+        <span id="progress-text">0 of 5 completed</span>
+        <button id="reset-btn" class="text-xs text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 font-medium transition-colors">Reset All</button>
+      </div>
+    </header>
+
+    <!-- Morning Intention & Reflection Journal -->
+    <section class="bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/50 rounded-xl p-4 space-y-2.5">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-sm">🌅</span>
+          <h2 class="text-sm font-semibold text-amber-900 dark:text-amber-300">5:00 AM Daily Intention</h2>
+        </div>
+        <span id="journal-status" class="text-xs text-amber-700/80 dark:text-amber-400 font-medium transition-opacity">Auto-saved</span>
+      </div>
+
+      <textarea id="journal-input" rows="2" placeholder="What is your focus or mindset for today's meditation, yoga, and workout?" class="w-full text-xs rounded-lg border-amber-200 dark:border-amber-900/60 bg-white/90 dark:bg-slate-900 p-2.5 text-slate-700 dark:text-slate-200 focus:ring-amber-500 focus:border-amber-500 border resize-none placeholder-slate-400"></textarea>
+
+      <!-- Quick Intention Tags -->
+      <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+        <span class="text-[10px] text-amber-800 dark:text-amber-300 font-medium uppercase tracking-wider mr-1">Prompts:</span>
+        <button type="button" data-prompt="Calm mind, steady breath, and complete presence." class="prompt-chip text-[11px] px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-slate-700 transition">Peace & Calm</button>
+        <button type="button" data-prompt="Heavy lifts, perfect form, and 100% discipline." class="prompt-chip text-[11px] px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-slate-700 transition">Discipline & Strength</button>
+        <button type="button" data-prompt="Grateful for health, growth, and morning discipline." class="prompt-chip text-[11px] px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 border border-amber-200 dark:border-amber-900/60 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-slate-700 transition">Gratitude</button>
+      </div>
+    </section>
+
+    <!-- Built-in Session Timer with Background Sync & Customizable Soundscape -->
+    <section class="bg-slate-900 border border-slate-800 text-white rounded-xl p-5 space-y-4 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <h2 class="text-sm font-semibold tracking-wide uppercase text-slate-300">Focus & Routine Timer</h2>
+        </div>
+        <span id="timer-label" class="text-xs text-slate-400">Morning Meditation (20m)</span>
+      </div>
+
+      <!-- Digital Display -->
+      <div class="flex flex-col items-center justify-center py-2">
+        <div id="timer-display" class="font-mono text-5xl font-bold tracking-tight text-white">20:00</div>
+        <div class="flex items-center space-x-2 mt-1">
+          <p id="timer-status" class="text-xs text-slate-400">Ready to begin</p>
+          <span class="text-slate-600 text-xs">•</span>
+          <span id="tab-sync-indicator" class="text-[11px] text-emerald-400 flex items-center space-x-1">
+            <span>●</span>
+            <span>Runs in background / tab title</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Preset Selection -->
+      <div class="flex flex-wrap gap-2 justify-center">
+        <button data-duration="1200" data-name="Morning Meditation (20m)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition">Meditation • 20m</button>
+        <button data-duration="1800" data-name="Sunrise Yoga (30m)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition">Yoga • 30m</button>
+        <button data-duration="2700" data-name="Deep Yoga Flow (45m)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition">Deep Yoga • 45m</button>
+        <button data-duration="600" data-name="Warm-Up / Stretch (10m)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 border border-slate-700 transition">Stretch • 10m</button>
+      </div>
+
+      <!-- Timer Controls -->
+      <div class="flex justify-center items-center space-x-3 pt-1">
+        <button id="timer-toggle-btn" class="px-6 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm transition shadow-sm active:scale-95">Start Timer</button>
+        <button id="timer-reset-btn" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium transition border border-slate-700">Reset</button>
+      </div>
+
+      <!-- Soundscape & Ambient Frequency Selector -->
+      <div class="pt-3 border-t border-slate-800/80 space-y-2.5 text-xs">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-400 font-medium">Soundscape:</span>
+            <select id="soundscape-select" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 focus:ring-emerald-500 focus:border-emerald-500">
+              <option value="432">432Hz Om & Deep Zen Drone</option>
+              <option value="528">528Hz Solfeggio (Transformation)</option>
+              <option value="binaural">Alpha Binaural Wave (Focus)</option>
+              <option value="pink">Pink Noise (Gentle Waterfall)</option>
+            </select>
+          </div>
+
+          <!-- Ambient Sound Toggle -->
+          <button id="ambient-toggle-btn" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center space-x-1.5">
+            <span id="ambient-icon">🎵</span>
+            <span id="ambient-text">Play 432Hz Zen Drone</span>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+          <!-- Volume slider -->
+          <div class="flex items-center space-x-2 text-slate-400">
+            <span>🔉 Volume</span>
+            <input type="range" id="soundscape-volume" min="0" max="1" step="0.05" value="0.2" class="w-20 accent-emerald-500 h-1 bg-slate-700 rounded-lg cursor-pointer">
+          </div>
+
+          <!-- Notification Permission Toggle -->
+          <button id="notify-perm-btn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition flex items-center space-x-1">
+            <span id="notify-icon">🔔</span>
+            <span id="notify-text">Enable Background Alert</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Morning 5:00 AM Section -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          <h2 class="text-base font-semibold text-slate-800 dark:text-slate-100">5:00 AM Morning Plan (Daily)</h2>
+        </div>
+        <span id="morning-count" class="text-xs text-slate-400 dark:text-slate-500">3 items</span>
+      </div>
+
+      <div id="morning-list" class="space-y-2.5">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Workout Section (Dynamic based on selected Split Day) -->
+    <section class="space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+          <h2 id="workout-section-title" class="text-base font-semibold text-slate-800 dark:text-slate-100">Workout Plan • Back & Biceps</h2>
+        </div>
+        <span id="workout-count" class="text-xs text-slate-400 dark:text-slate-500">4 items</span>
+      </div>
+
+      <div id="workout-list" class="space-y-2.5">
+        <!-- Rendered dynamically according to split -->
+      </div>
+    </section>
+
+    <!-- Add Custom Item Form (Collapsible) -->
+    <section class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50/80 dark:bg-slate-900/50 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-100 flex items-center space-x-2">
+          <span>➕</span>
+          <span>Add Custom Routine or Exercise</span>
+        </h3>
+        <span class="text-xs text-slate-400 dark:text-slate-500">Personalize plan</span>
+      </div>
+
+      <form id="add-task-form" class="space-y-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Target Section</label>
+            <select id="task-category" class="w-full text-xs rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2 border focus:ring-emerald-500 focus:border-emerald-500">
+              <option value="morning">5:00 AM Morning Plan</option>
+              <option value="workout" selected>Daily Workout Plan</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Time / Duration / Sets</label>
+            <input type="text" id="task-time" placeholder="e.g. 4 sets of 12 reps" required class="w-full text-xs rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2 border focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Routine / Exercise Title</label>
+          <input type="text" id="task-title" placeholder="e.g. Incline Dumbbell Curl or Lat Pulldown" required class="w-full text-xs rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2 border focus:ring-emerald-500 focus:border-emerald-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Description / Focus (Optional)</label>
+          <input type="text" id="task-desc" placeholder="e.g. Focus on full contraction and 2-second negative" class="w-full text-xs rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-2 border focus:ring-emerald-500 focus:border-emerald-500">
+        </div>
+
+        <button type="submit" class="w-full py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-900 dark:hover:bg-slate-600 text-white text-xs font-semibold rounded-lg transition active:scale-95 shadow-sm">Add Item</button>
+      </form>
+    </section>
+
+    <!-- Celebration Banner (hidden by default) -->
+    <div id="congrats-banner" class="hidden p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-center space-y-1">
+      <p class="text-sm font-semibold">🎉 All routines completed for today!</p>
+      <p class="text-xs text-emerald-600 dark:text-emerald-400">Great discipline Krish sir! Your streak is secured for today.</p>
+    </div>
+
+  </main>
+
+  <script>
+    // --- USER PROFILE & STORAGE KEYS ---
+    const USER_NAME = 'Krish Patel';
+    const USER_HONORIFIC = 'Krish sir';
+
+    const STORAGE_KEY_SPLIT = 'wellness_split_selection_v10';
+    const STORAGE_KEY_TASKS = 'wellness_routine_items_v10';
+    const STORAGE_KEY_STREAK = 'wellness_routine_streak_v10';
+    const STORAGE_KEY_JOURNAL = 'wellness_routine_journal_v10';
+    const STORAGE_KEY_THEME = 'wellness_routine_theme_v10';
+    const STORAGE_KEY_LED = 'wellness_routine_led_v10';
+    const STORAGE_KEY_JARVIS = 'wellness_routine_jarvis_v10';
+    const STORAGE_KEY_WATER = 'wellness_routine_water_v10';
+
+    const ORIGINAL_TITLE = 'Daily Wellness Routine • Krish Patel';
+
+    // 6-Day Workout Program by Krish Patel (Twice per week + Sunday Rest)
+    const WORKOUT_SPLITS = {
+      'back-biceps': {
+        name: 'Back & Biceps',
+        days: 'Monday & Thursday',
+        tasks: [
+          { id: 'task-4', title: 'Dynamic Shoulder & Spine Warm-Up', time: '8 mins', desc: 'Arm swings, band pull-aparts, cat-cow stretches.' },
+          { id: 'task-5', title: 'Pull-Ups / Lat Pulldown', time: '4 sets • 10-12 reps', desc: 'Drive elbows down, squeeze lats at the bottom.' },
+          { id: 'bb-3', title: 'Bent-Over Barbell / Dumbbell Row', time: '4 sets • 10 reps', desc: 'Flat back, pull into lower abdomen for thickness.' },
+          { id: 'bb-4', title: 'Incline Dumbbell Bicep Curls', time: '3 sets • 12 reps', desc: 'Full stretch at bottom, strict curl without swinging.' },
+          { id: 'bb-5', title: 'Hammer Curls & Forearm Hang', time: '3 sets • 15 reps', desc: 'Brachialis & grip development, 30s dead hang finish.' }
+        ]
+      },
+      'chest-triceps': {
+        name: 'Chest & Triceps',
+        days: 'Tuesday & Friday',
+        tasks: [
+          { id: 'ct-1', title: 'Rotator Cuff & Chest Warm-Up', time: '8 mins', desc: 'Scapular push-ups, band dislocates, light flyes.' },
+          { id: 'ct-2', title: 'Flat Barbell / Dumbbell Bench Press', time: '4 sets • 8-10 reps', desc: 'Control the descent, powerful press through chest.' },
+          { id: 'ct-3', title: 'Incline Dumbbell Press', time: '4 sets • 10-12 reps', desc: 'Upper pectoral focus, 30-degree incline.' },
+          { id: 'ct-4', title: 'Parallel Bar Dips / Cable Flyes', time: '3 sets • 12-15 reps', desc: 'Lean slightly forward for deep chest activation.' },
+          { id: 'ct-5', title: 'Rope Tricep Pushdowns & Skullcrushers', time: '4 sets • 12 reps', desc: 'Flared rope lockout for lateral tricep head.' }
+        ]
+      },
+      'legs-shoulders': {
+        name: 'Legs & Shoulders',
+        days: 'Wednesday & Saturday',
+        tasks: [
+          { id: 'ls-1', title: 'Hip Mobility & Ankle Warm-Up', time: '8 mins', desc: 'Deep goblet squat hold, leg swings, hip circles.' },
+          { id: 'ls-2', title: 'Barbell Back Squats / Leg Press', time: '4 sets • 8-10 reps', desc: 'Hit parallel depth, drive through mid-foot.' },
+          { id: 'ls-3', title: 'Romanian Deadlifts (Hamstrings)', time: '4 sets • 10 reps', desc: 'Hinge hips backward, keep lats engaged.' },
+          { id: 'ls-4', title: 'Overhead Dumbbell Shoulder Press', time: '4 sets • 10 reps', desc: 'Core braced, press straight overhead.' },
+          { id: 'ls-5', title: 'Lateral Raises & Face Pulls', time: '4 sets • 15 reps', desc: 'Side deltoid width & rear delt posture protector.' }
+        ]
+      },
+      'sunday-rest': {
+        name: 'Active Recovery & Mobility',
+        days: 'Sunday',
+        tasks: [
+          { id: 'sr-1', title: 'Deep Hip & Spine Mobility Flow', time: '20 mins', desc: 'Pigeon pose, child pose, spinal twists.' },
+          { id: 'sr-2', title: 'Light 30-Min Outdoor Nature Walk', time: '30 mins', desc: 'Zone 1 low-heart-rate recovery & fresh air.' },
+          { id: 'sr-3', title: 'Full Body Foam Rolling & Hydration', time: '15 mins', desc: 'Release tight fascia in quads, back, and calves.' }
+        ]
+      }
+    };
+
+    const MORNING_RITUALS = [
+      { id: 'task-1', title: '5:00 AM Morning Hydration Glass', time: '5:00 AM • 500ml', desc: 'Warm lemon water or mineral water to kickstart metabolism.' },
+      { id: 'task-2', title: 'Mindfulness & Breath Meditation', time: '5:05 AM • 20 mins', desc: 'Quiet sitting, mental clarity, and setting daily intent.' },
+      { id: 'task-3', title: 'Sunrise Yoga Flow & Surya Namaskar', time: '5:25 AM • 30 mins', desc: 'Dynamic mobility, 6 rounds of Surya Namaskar.' }
+    ];
+
+    let currentSplitKey = 'back-biceps';
+    let tasksState = {};
+    let streakData = { count: 1, lastCompletedDate: null };
+    let waterGlasses = 4;
+    let weeklyHistory = [
+      { day: 'Mon', split: 'Back/Bi', completed: true, medMins: 20, workoutMins: 45 },
+      { day: 'Tue', split: 'Chest/Tri', completed: true, medMins: 20, workoutMins: 45 },
+      { day: 'Wed', split: 'Legs/Sh', completed: true, medMins: 20, workoutMins: 50 },
+      { day: 'Thu', split: 'Back/Bi', completed: true, medMins: 20, workoutMins: 45 },
+      { day: 'Fri', split: 'Chest/Tri', completed: true, medMins: 20, workoutMins: 45 },
+      { day: 'Sat', split: 'Legs/Sh', completed: true, medMins: 20, workoutMins: 50 },
+      { day: 'Sun', split: 'Rest', completed: false, isToday: true, medMins: 20, workoutMins: 0 }
+    ];
+
+    // DOM Elements
+    const mainCard = document.getElementById('main-card');
+    const morningList = document.getElementById('morning-list');
+    const workoutList = document.getElementById('workout-list');
+    const workoutSectionTitle = document.getElementById('workout-section-title');
+    const currentSplitTag = document.getElementById('current-split-tag');
+    const morningCount = document.getElementById('morning-count');
+    const workoutCount = document.getElementById('workout-count');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const progressPercent = document.getElementById('progress-percent');
+    const congratsBanner = document.getElementById('congrats-banner');
+    const streakCountEl = document.getElementById('streak-count');
+    const resetBtn = document.getElementById('reset-btn');
+    const addTaskForm = document.getElementById('add-task-form');
+    const splitButtons = document.querySelectorAll('.split-btn');
+
+    // Journal Elements
+    const journalInput = document.getElementById('journal-input');
+    const journalStatus = document.getElementById('journal-status');
+    const promptChips = document.querySelectorAll('.prompt-chip');
+
+    // Theme Toggle Elements
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const themeText = document.getElementById('theme-text');
+
+    // Install Guide Elements
+    const installGuideBtn = document.getElementById('install-guide-btn');
+    const installModal = document.getElementById('install-modal');
+    const closeInstallModalBtn = document.getElementById('close-install-modal-btn');
+
+    installGuideBtn.addEventListener('click', () => {
+      installModal.classList.toggle('hidden');
+    });
+
+    closeInstallModalBtn.addEventListener('click', () => {
+      installModal.classList.add('hidden');
+    });
+
+    // LED Edge Light Elements
+    const ledToggleBtn = document.getElementById('led-toggle-btn');
+    const ledBtnText = document.getElementById('led-btn-text');
+    const ledScreenOverlay = document.getElementById('led-screen-overlay');
+    const ledControlsPanel = document.getElementById('led-controls-panel');
+    const ledPresetBtns = document.querySelectorAll('.led-preset-btn');
+
+    let isLedActive = false;
+    let currentLedColor = 'rgba(245, 158, 11, 0.65)';
+
+    function setLedColor(color) {
+      currentLedColor = color;
+      ledScreenOverlay.style.setProperty('--glow-color', color);
+      if (isLedActive) {
+        mainCard.style.boxShadow = `0 0 35px 5px ${color}`;
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY_LED, JSON.stringify({ active: isLedActive, color: currentLedColor }));
+      } catch (e) {}
+    }
+
+    function toggleLedLight() {
+      isLedActive = !isLedActive;
+      if (isLedActive) {
+        ledScreenOverlay.classList.remove('hidden');
+        ledScreenOverlay.classList.add('led-active-screen');
+        ledControlsPanel.classList.remove('hidden');
+        ledBtnText.textContent = 'LED Light: On ✨';
+        ledToggleBtn.classList.add('ring-2', 'ring-amber-400');
+        mainCard.style.boxShadow = `0 0 35px 5px ${currentLedColor}`;
+      } else {
+        ledScreenOverlay.classList.add('hidden');
+        ledScreenOverlay.classList.remove('led-active-screen');
+        ledControlsPanel.classList.add('hidden');
+        ledBtnText.textContent = 'LED Light: Off';
+        ledToggleBtn.classList.remove('ring-2', 'ring-amber-400');
+        mainCard.style.boxShadow = '';
+      }
+      setLedColor(currentLedColor);
+    }
+
+    ledToggleBtn.addEventListener('click', toggleLedLight);
+
+    ledPresetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLedColor(btn.dataset.color);
+        ledPresetBtns.forEach(b => b.classList.remove('ring-2', 'ring-amber-400', 'font-bold'));
+        btn.classList.add('ring-2', 'ring-amber-400', 'font-bold');
+      });
+    });
+
+    // Timer Elements
+    const timerDisplay = document.getElementById('timer-display');
+    const timerStatus = document.getElementById('timer-status');
+    const timerLabel = document.getElementById('timer-label');
+    const timerToggleBtn = document.getElementById('timer-toggle-btn');
+    const timerResetBtn = document.getElementById('timer-reset-btn');
+    const presetButtons = document.querySelectorAll('.preset-btn');
+    const ambientToggleBtn = document.getElementById('ambient-toggle-btn');
+    const ambientIcon = document.getElementById('ambient-icon');
+    const ambientText = document.getElementById('ambient-text');
+    const notifyPermBtn = document.getElementById('notify-perm-btn');
+    const notifyText = document.getElementById('notify-text');
+    const soundscapeSelect = document.getElementById('soundscape-select');
+    const soundscapeVolume = document.getElementById('soundscape-volume');
+
+    // JARVIS Elements
+    const jarvisDialogue = document.getElementById('jarvis-dialogue');
+    const jarvisStatusText = document.getElementById('jarvis-status-text');
+    const jarvisGreetBtn = document.getElementById('jarvis-greet-btn');
+    const jarvisVoiceToggle = document.getElementById('jarvis-voice-toggle');
+    const jarvisCmdChips = document.querySelectorAll('.jarvis-cmd-chip');
+    const micListenBtn = document.getElementById('mic-listen-btn');
+    const micIcon = document.getElementById('mic-icon');
+    const micText = document.getElementById('mic-text');
+    const jarvisPulse = document.getElementById('jarvis-pulse');
+
+    let jarvisVoiceEnabled = true;
+    let hasGreetedOnEntry = false;
+
+    // --- WATER HYDRATION TRACKER ---
+    const waterGlassesRow = document.getElementById('water-glasses-row');
+    const waterAmountText = document.getElementById('water-amount-text');
+    const waterStatusTip = document.getElementById('water-status-tip');
+    const addWaterBtn = document.getElementById('add-water-btn');
+    const removeWaterBtn = document.getElementById('remove-water-btn');
+
+    function renderWaterTracker() {
+      waterGlassesRow.innerHTML = '';
+      const totalGlasses = 10;
+
+      for (let i = 1; i <= totalGlasses; i++) {
+        const isFilled = i <= waterGlasses;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-8 h-9 rounded-md flex flex-col items-center justify-center transition-all ${
+          isFilled 
+            ? 'bg-sky-500 text-white shadow-sm scale-105' 
+            : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-600 border border-slate-200 dark:border-slate-700 hover:bg-sky-100'
+        }`;
+        btn.title = i === 1 ? '5:00 AM Morning Glass (500ml/250ml)' : `Glass ${i}`;
+        btn.innerHTML = `<span class="text-xs">${isFilled ? '💧' : '🥛'}</span><span class="text-[9px] font-semibold">${i * 250}</span>`;
+        btn.addEventListener('click', () => {
+          waterGlasses = i;
+          saveWaterState();
+          renderWaterTracker();
+          if (waterGlasses >= totalGlasses) {
+            jarvisSpeak(`Outstanding Krish sir! Daily hydration target of 2.5 liters achieved.`);
+          }
+        });
+        waterGlassesRow.appendChild(btn);
+      }
+
+      const liters = (waterGlasses * 0.25).toFixed(1);
+      waterAmountText.textContent = `${liters}L`;
+      waterStatusTip.textContent = `${waterGlasses} of ${totalGlasses} glasses (${Math.round((waterGlasses / totalGlasses) * 100)}%)`;
+    }
+
+    function saveWaterState() {
+      try {
+        localStorage.setItem(STORAGE_KEY_WATER, JSON.stringify(waterGlasses));
+      } catch (e) {}
+    }
+
+    addWaterBtn.addEventListener('click', () => {
+      if (waterGlasses < 10) {
+        waterGlasses++;
+        saveWaterState();
+        renderWaterTracker();
+        jarvisSpeak(`Logged 250 milliliters of water. Current total: ${(waterGlasses * 0.25).toFixed(1)} liters, Krish sir.`);
+      }
+    });
+
+    removeWaterBtn.addEventListener('click', () => {
+      if (waterGlasses > 0) {
+        waterGlasses--;
+        saveWaterState();
+        renderWaterTracker();
+      }
+    });
+
+    // --- WEEKLY CONSISTENCY GRID ---
+    const weeklyDaysGrid = document.getElementById('weekly-days-grid');
+    const weeklyScore = document.getElementById('weekly-score');
+    const totalMedMins = document.getElementById('total-med-mins');
+    const totalWorkoutMins = document.getElementById('total-workout-mins');
+
+    function renderWeeklyGrid() {
+      weeklyDaysGrid.innerHTML = '';
+      let completedDays = 0;
+      let totalMed = 0;
+      let totalWork = 0;
+
+      weeklyHistory.forEach(d => {
+        if (d.completed) completedDays++;
+        totalMed += d.medMins || 0;
+        totalWork += d.workoutMins || 0;
+
+        const dayCol = document.createElement('div');
+        dayCol.className = `p-2 rounded-lg border flex flex-col items-center justify-center transition-all ${
+          d.completed
+            ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 font-bold'
+            : d.isToday
+              ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200 ring-2 ring-amber-400 font-bold'
+              : 'bg-white dark:bg-slate-800/60 border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400'
+        }`;
+
+        dayCol.innerHTML = `
+          <span class="text-[10px] uppercase font-semibold">${d.day}</span>
+          <span class="text-[9px] text-indigo-600 dark:text-indigo-400 font-medium">${d.split}</span>
+          <span class="text-sm mt-0.5">${d.completed ? '✓' : d.isToday ? '⏳' : '○'}</span>
+        `;
+        weeklyDaysGrid.appendChild(dayCol);
+      });
+
+      const scorePercent = Math.round((completedDays / 7) * 100);
+      weeklyScore.textContent = `${scorePercent}% Completed`;
+      totalMedMins.textContent = `${totalMed} mins`;
+      totalWorkoutMins.textContent = `${totalWork} mins`;
+    }
+
+    // --- JARVIS TTS ENGINE ---
+    function jarvisSpeak(text) {
+      jarvisDialogue.textContent = `"${text}"`;
+      if (!jarvisVoiceEnabled) return;
+      if (!('speechSynthesis' in window)) return;
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 0.95;
+
+      const voices = window.speechSynthesis.getVoices();
+      const jarvisVoice = voices.find(v => v.lang === 'en-GB' || v.name.includes('UK') || v.name.includes('Male')) ||
+                          voices.find(v => v.lang.startsWith('en'));
+      if (jarvisVoice) {
+        utterance.voice = jarvisVoice;
+      }
+
+      utterance.onstart = () => {
+        jarvisPulse.classList.add('animate-ping', 'bg-cyan-400');
+        jarvisStatusText.textContent = `Transmitting to ${USER_NAME}...`;
+      };
+
+      utterance.onend = () => {
+        jarvisPulse.classList.remove('animate-ping', 'bg-cyan-400');
+        jarvisPulse.classList.add('bg-emerald-400');
+        jarvisStatusText.textContent = `Assigned to: ${USER_NAME}`;
+      };
+
+      try {
+        window.speechSynthesis.speak(utterance);
+      } catch (e) {}
+    }
+
+    function triggerJarvisGreeting() {
+      const splitInfo = WORKOUT_SPLITS[currentSplitKey];
+      const greeting = `Welcome Krish sir. Systems online. Today's training split is ${splitInfo.name}, scheduled alongside your 5:00 AM meditation and yoga rituals. How may I assist you today?`;
+      jarvisSpeak(greeting);
+    }
+
+    jarvisGreetBtn.addEventListener('click', triggerJarvisGreeting);
+
+    jarvisVoiceToggle.addEventListener('click', () => {
+      jarvisVoiceEnabled = !jarvisVoiceEnabled;
+      if (jarvisVoiceEnabled) {
+        jarvisVoiceToggle.textContent = 'Voice: On';
+        jarvisVoiceToggle.classList.remove('text-rose-400');
+        jarvisSpeak(`Voice output online, Krish sir.`);
+      } else {
+        window.speechSynthesis.cancel();
+        jarvisVoiceToggle.textContent = 'Voice: Muted';
+        jarvisVoiceToggle.classList.add('text-rose-400');
+        jarvisDialogue.textContent = `"Voice muted, Krish sir. Operating in silent visual mode."`;
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY_JARVIS, JSON.stringify({ voice: jarvisVoiceEnabled }));
+      } catch (e) {}
+    });
+
+    function onFirstUserInteraction() {
+      if (!hasGreetedOnEntry) {
+        hasGreetedOnEntry = true;
+        setTimeout(() => {
+          triggerJarvisGreeting();
+        }, 400);
+      }
+      document.removeEventListener('click', onFirstUserInteraction);
+    }
+    document.addEventListener('click', onFirstUserInteraction);
+
+    function executeJarvisCommand(cmd) {
+      if (cmd === 'meditation') {
+        const medBtn = document.querySelector('button[data-name*="Meditation"]');
+        if (medBtn) medBtn.click();
+        startTimer();
+        if (!isLedActive) toggleLedLight();
+        jarvisSpeak(`Engaging 20-minute meditation protocol, Krish sir. Ambient lighting active.`);
+      } else if (cmd === 'yoga') {
+        const yogaBtn = document.querySelector('button[data-name*="Sunrise Yoga"]');
+        if (yogaBtn) yogaBtn.click();
+        startTimer();
+        jarvisSpeak(`Commencing 30-minute sunrise yoga sequence, Krish sir. Stay present.`);
+      } else if (cmd === 'workout') {
+        const splitInfo = WORKOUT_SPLITS[currentSplitKey];
+        jarvisSpeak(`Today's focus is ${splitInfo.name}, Krish sir. Warm-up followed by heavy compound lifts and accessory sets.`);
+      } else if (cmd === 'water') {
+        addWaterBtn.click();
+      } else if (cmd === 'light') {
+        toggleLedLight();
+        jarvisSpeak(isLedActive ? `Ambient LED edge lighting illuminated, Krish sir.` : `LED lighting disengaged.`);
+      } else if (cmd === 'music') {
+        toggleAmbientSound();
+        jarvisSpeak(isAmbientPlaying ? `Broadcasting 432 hertz zen harmonic frequency, Krish sir.` : `Ambient sound paused.`);
+      } else if (cmd === 'status') {
+        jarvisSpeak(`Status report: Streak is ${streakData.count} days, Krish sir. Water logged at ${(waterGlasses * 0.25).toFixed(1)} liters.`);
+      }
+    }
+
+    jarvisCmdChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        executeJarvisCommand(chip.dataset.cmd);
+      });
+    });
+
+    // Voice recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        micIcon.textContent = '🔴';
+        micText.textContent = 'Listening...';
+        jarvisDialogue.textContent = '"Listening for your command, Krish sir..."';
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        jarvisDialogue.textContent = `Krish: "${transcript}"`;
+
+        if (transcript.includes('meditat')) {
+          executeJarvisCommand('meditation');
+        } else if (transcript.includes('yoga')) {
+          executeJarvisCommand('yoga');
+        } else if (transcript.includes('workout') || transcript.includes('exercise')) {
+          executeJarvisCommand('workout');
+        } else if (transcript.includes('water') || transcript.includes('drink')) {
+          executeJarvisCommand('water');
+        } else if (transcript.includes('light') || transcript.includes('led')) {
+          executeJarvisCommand('light');
+        } else if (transcript.includes('music') || transcript.includes('sound') || transcript.includes('zen')) {
+          executeJarvisCommand('music');
+        } else if (transcript.includes('status') || transcript.includes('progress') || transcript.includes('streak')) {
+          executeJarvisCommand('status');
+        } else {
+          jarvisSpeak(`Command acknowledged, Krish sir. Ready to assist with your routines.`);
+        }
+      };
+
+      recognition.onerror = () => {
+        micIcon.textContent = '🎙️';
+        micText.textContent = 'Speak Command';
+        jarvisStatusText.textContent = `Assigned to: ${USER_NAME}`;
+      };
+
+      recognition.onend = () => {
+        micIcon.textContent = '🎙️';
+        micText.textContent = 'Speak Command';
+      };
+
+      micListenBtn.addEventListener('click', () => {
+        try {
+          recognition.start();
+        } catch (e) {
+          jarvisSpeak(`Speech recognition is already active, Krish sir.`);
+        }
+      });
+    } else {
+      micListenBtn.classList.add('hidden');
+    }
+
+    // --- WORKOUT SPLIT SWITCHING ---
+    function selectWorkoutSplit(splitKey, announce = false) {
+      currentSplitKey = splitKey;
+      const split = WORKOUT_SPLITS[splitKey];
+      currentSplitTag.textContent = split.name;
+      workoutSectionTitle.textContent = `Workout Plan • ${split.name}`;
+
+      splitButtons.forEach(btn => {
+        if (btn.dataset.split === splitKey) {
+          btn.classList.add('bg-indigo-600', 'text-white', 'border-indigo-600', 'shadow-sm');
+          btn.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        } else {
+          btn.classList.remove('bg-indigo-600', 'text-white', 'border-indigo-600', 'shadow-sm');
+          btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        }
+      });
+
+      try {
+        localStorage.setItem(STORAGE_KEY_SPLIT, splitKey);
+      } catch (e) {}
+
+      renderTasks();
+      if (announce) {
+        jarvisSpeak(`Switched to ${split.name} protocol for ${split.days}, Krish sir.`);
+      }
+    }
+
+    splitButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectWorkoutSplit(btn.dataset.split, true);
+      });
+    });
+
+    // --- RENDER TASKS ---
+    function renderTasks() {
+      morningList.innerHTML = '';
+      workoutList.innerHTML = '';
+
+      let mTotal = MORNING_RITUALS.length;
+      let wTotal = WORKOUT_SPLITS[currentSplitKey].tasks.length;
+      let completedCount = 0;
+      let totalCount = mTotal + wTotal;
+
+      // Render Morning
+      MORNING_RITUALS.forEach(task => {
+        const isDone = !!tasksState[task.id];
+        if (isDone) completedCount++;
+
+        const item = document.createElement('div');
+        item.className = `routine-item flex items-start p-3.5 rounded-xl border transition-all ${
+          isDone 
+            ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/60' 
+            : 'bg-slate-50/50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+        }`;
+
+        item.innerHTML = `
+          <input type="checkbox" data-id="${task.id}" class="task-checkbox mt-1 h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-emerald-600 focus:ring-emerald-500 cursor-pointer" ${isDone ? 'checked' : ''}>
+          <div class="ml-3.5 flex-1 select-none cursor-pointer task-body">
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-slate-800 dark:text-slate-100 task-title ${isDone ? 'line-through text-slate-400 dark:text-slate-500' : ''}">${escapeHtml(task.title)}</span>
+              <span class="text-xs text-slate-400 dark:text-slate-500 font-normal ml-2 shrink-0">${escapeHtml(task.time)}</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(task.desc)}</p>
+          </div>
+        `;
+        morningList.appendChild(item);
+      });
+
+      // Render Workout
+      const workoutTasks = WORKOUT_SPLITS[currentSplitKey].tasks;
+      workoutTasks.forEach(task => {
+        const isDone = !!tasksState[task.id];
+        if (isDone) completedCount++;
+
+        const item = document.createElement('div');
+        item.className = `routine-item flex items-start p-3.5 rounded-xl border transition-all ${
+          isDone 
+            ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/60' 
+            : 'bg-slate-50/50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+        }`;
+
+        item.innerHTML = `
+          <input type="checkbox" data-id="${task.id}" class="task-checkbox mt-1 h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-emerald-600 focus:ring-emerald-500 cursor-pointer" ${isDone ? 'checked' : ''}>
+          <div class="ml-3.5 flex-1 select-none cursor-pointer task-body">
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-slate-800 dark:text-slate-100 task-title ${isDone ? 'line-through text-slate-400 dark:text-slate-500' : ''}">${escapeHtml(task.title)}</span>
+              <span class="text-xs text-slate-400 dark:text-slate-500 font-normal ml-2 shrink-0">${escapeHtml(task.time)}</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(task.desc)}</p>
+          </div>
+        `;
+        workoutList.appendChild(item);
+      });
+
+      morningCount.textContent = `${mTotal} items`;
+      workoutCount.textContent = `${wTotal} items`;
+
+      attachItemEvents();
+      updateProgress(completedCount, totalCount);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function attachItemEvents() {
+      document.querySelectorAll('.task-checkbox').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const id = e.target.dataset.id;
+          tasksState[id] = e.target.checked;
+          saveTasksState();
+          renderTasks();
+        });
+      });
+
+      document.querySelectorAll('.task-body').forEach(body => {
+        body.addEventListener('click', (e) => {
+          const cb = body.parentElement.querySelector('.task-checkbox');
+          if (cb) {
+            cb.checked = !cb.checked;
+            cb.dispatchEvent(new Event('change'));
+          }
+        });
+      });
+    }
+
+    function saveTasksState() {
+      try {
+        localStorage.setItem(STORAGE_KEY_TASKS, JSON.stringify(tasksState));
+      } catch (e) {}
+    }
+
+    function updateProgress(completed, total) {
+      const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
+      progressBar.style.width = percentage + '%';
+      progressPercent.textContent = percentage + '%';
+      progressText.textContent = `${completed} of ${total} completed`;
+
+      const allDone = completed === total && total > 0;
+      if (allDone) {
+        congratsBanner.classList.remove('hidden');
+        checkStreakProgress(true);
+      } else {
+        congratsBanner.classList.add('hidden');
+      }
+    }
+
+    function checkStreakProgress(allDone) {
+      const today = new Date().toISOString().slice(0, 10);
+      if (allDone) {
+        if (streakData.lastCompletedDate !== today) {
+          streakData.count = (streakData.count || 0) + 1;
+          streakData.lastCompletedDate = today;
+          try {
+            localStorage.setItem(STORAGE_KEY_STREAK, JSON.stringify(streakData));
+          } catch (e) {}
+          streakCountEl.textContent = `${streakData.count} Day Streak`;
+          jarvisSpeak(`Remarkable discipline Krish sir! All routines are complete for today. Your streak is now ${streakData.count} days.`);
+          if (weeklyHistory[6]) {
+            weeklyHistory[6].completed = true;
+            renderWeeklyGrid();
+          }
+        }
+      }
+    }
+
+    resetBtn.addEventListener('click', () => {
+      tasksState = {};
+      saveTasksState();
+      renderTasks();
+      jarvisSpeak('All daily routine checks have been reset, Krish sir. Ready for a new day.');
+    });
+
+    addTaskForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const category = document.getElementById('task-category').value;
+      const titleInput = document.getElementById('task-title');
+      const timeInput = document.getElementById('task-time');
+      const descInput = document.getElementById('task-desc');
+
+      const title = titleInput.value.trim();
+      const time = timeInput.value.trim();
+      const desc = descInput.value.trim();
+
+      if (!title || !time) return;
+
+      const newTask = {
+        id: 'task-' + Date.now(),
+        title: title,
+        time: time,
+        desc: desc
+      };
+
+      if (category === 'morning') {
+        MORNING_RITUALS.push(newTask);
+      } else {
+        WORKOUT_SPLITS[currentSplitKey].tasks.push(newTask);
+      }
+
+      renderTasks();
+      titleInput.value = '';
+      timeInput.value = '';
+      descInput.value = '';
+      jarvisSpeak(`Added ${title} to your routine, Krish sir.`);
+    });
+
+    // Journal auto-save
+    let journalSaveTimeout = null;
+    journalInput.addEventListener('input', () => {
+      journalStatus.textContent = 'Saving...';
+      clearTimeout(journalSaveTimeout);
+      journalSaveTimeout = setTimeout(() => {
+        try {
+          localStorage.setItem(STORAGE_KEY_JOURNAL, journalInput.value);
+          journalStatus.textContent = 'Auto-saved ✓';
+        } catch (e) {}
+      }, 500);
+    });
+
+    promptChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const text = chip.dataset.prompt;
+        journalInput.value = text;
+        journalInput.dispatchEvent(new Event('input'));
+      });
+    });
+
+    // --- ACCURATE BACKGROUND TIMER ---
+    let totalSeconds = 1200;
+    let remainingSeconds = 1200;
+    let targetEndTime = null;
+    let timerInterval = null;
+    let isRunning = false;
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function renderTimer() {
+      const formatted = formatTime(remainingSeconds);
+      timerDisplay.textContent = formatted;
+      if (isRunning) {
+        document.title = `[${formatted}] ${timerLabel.textContent} • Krish Patel`;
+      } else {
+        document.title = ORIGINAL_TITLE;
+      }
+    }
+
+    function playBellChime() {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const ctx = new AudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(528, ctx.currentTime);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 2.5);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 2.5);
+      } catch (e) {}
+    }
+
+    function triggerSessionCompletionNotification() {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          new Notification('Session Finished! 🧘✨', {
+            body: `${timerLabel.textContent} is complete. Wonderful discipline, Krish sir!`,
+            silent: false
+          });
+        } catch (e) {}
+      }
+    }
+
+    function tick() {
+      if (!isRunning || !targetEndTime) return;
+      const now = Date.now();
+      const diffMs = targetEndTime - now;
+      const secondsLeft = Math.max(0, Math.ceil(diffMs / 1000));
+      remainingSeconds = secondsLeft;
+      renderTimer();
+
+      if (remainingSeconds <= 0) {
+        finishTimer();
+      }
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      targetEndTime = Date.now() + (remainingSeconds * 1000);
+
+      timerToggleBtn.textContent = 'Pause Timer';
+      timerToggleBtn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
+      timerToggleBtn.classList.add('bg-amber-500', 'hover:bg-amber-600');
+      timerStatus.textContent = 'Session active (running in background)...';
+
+      tick();
+      clearInterval(timerInterval);
+      timerInterval = setInterval(tick, 500);
+    }
+
+    function pauseTimer() {
+      isRunning = false;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      targetEndTime = null;
+
+      timerToggleBtn.textContent = 'Resume Timer';
+      timerToggleBtn.classList.remove('bg-amber-500', 'hover:bg-amber-600');
+      timerToggleBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+      if (remainingSeconds > 0) {
+        timerStatus.textContent = 'Paused';
+      }
+      renderTimer();
+    }
+
+    function finishTimer() {
+      pauseTimer();
+      timerStatus.textContent = 'Session finished! Great job! ✨';
+      playBellChime();
+      triggerSessionCompletionNotification();
+      renderTimer();
+      jarvisSpeak(`${timerLabel.textContent} session completed, Krish sir. Excellent focus.`);
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      remainingSeconds = totalSeconds;
+      timerToggleBtn.textContent = 'Start Timer';
+      timerStatus.textContent = 'Ready to begin';
+      renderTimer();
+    }
+
+    timerToggleBtn.addEventListener('click', () => {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        if (remainingSeconds <= 0) {
+          remainingSeconds = totalSeconds;
+        }
+        startTimer();
+      }
+    });
+
+    timerResetBtn.addEventListener('click', resetTimer);
+
+    document.addEventListener('visibilitychange', () => {
+      if (isRunning) {
+        tick();
+      }
+    });
+
+    presetButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const duration = parseInt(btn.dataset.duration, 10);
+        const name = btn.dataset.name;
+        totalSeconds = duration;
+        remainingSeconds = duration;
+        timerLabel.textContent = name;
+        resetTimer();
+
+        presetButtons.forEach(b => b.classList.remove('border-emerald-400', 'text-emerald-300'));
+        btn.classList.add('border-emerald-400', 'text-emerald-300');
+      });
+    });
+
+    // --- SOUNDSCAPES ---
+    let ambientCtx = null;
+    let ambientGain = null;
+    let isAmbientPlaying = false;
+    let activeNodes = [];
+
+    function buildSoundNodes(type) {
+      if (!ambientCtx) return;
+      activeNodes.forEach(n => {
+        try { n.stop ? n.stop() : n.disconnect(); } catch (e) {}
+      });
+      activeNodes = [];
+
+      const now = ambientCtx.currentTime;
+
+      if (type === '432') {
+        const osc1 = ambientCtx.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(432, now);
+
+        const osc2 = ambientCtx.createOscillator();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(216, now);
+
+        const filter = ambientCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(650, now);
+
+        osc1.connect(filter);
+        osc2.connect(filter);
+        filter.connect(ambientGain);
+
+        osc1.start();
+        osc2.start();
+        activeNodes = [osc1, osc2, filter];
+
+      } else if (type === '528') {
+        const osc1 = ambientCtx.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(528, now);
+
+        const filter = ambientCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(528, now);
+
+        osc1.connect(filter);
+        filter.connect(ambientGain);
+        osc1.start();
+        activeNodes = [osc1, filter];
+
+      } else if (type === 'binaural') {
+        const merger = ambientCtx.createChannelMerger(2);
+        const oscLeft = ambientCtx.createOscillator();
+        oscLeft.frequency.setValueAtTime(200, now);
+        const oscRight = ambientCtx.createOscillator();
+        oscRight.frequency.setValueAtTime(210, now);
+
+        oscLeft.connect(merger, 0, 0);
+        oscRight.connect(merger, 0, 1);
+        merger.connect(ambientGain);
+
+        oscLeft.start();
+        oscRight.start();
+        activeNodes = [oscLeft, oscRight, merger];
+
+      } else if (type === 'pink') {
+        const bufferSize = ambientCtx.sampleRate * 2;
+        const buffer = ambientCtx.createBuffer(1, bufferSize, ambientCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        let b0 = 0, b1 = 0, b2 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          data[i] = (b0 + b1 + b2) * 0.11;
+        }
+
+        const noise = ambientCtx.createBufferSource();
+        noise.buffer = buffer;
+        noise.loop = true;
+        const filter = ambientCtx.createBiquadFilter();
+        filter.frequency.setValueAtTime(450, now);
+
+        noise.connect(filter);
+        filter.connect(ambientGain);
+        noise.start();
+        activeNodes = [noise, filter];
+      }
+    }
+
+    function toggleAmbientSound() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+
+      if (!ambientCtx) {
+        ambientCtx = new AudioCtx();
+        ambientGain = ambientCtx.createGain();
+        const vol = parseFloat(soundscapeVolume.value);
+        ambientGain.gain.setValueAtTime(vol, ambientCtx.currentTime);
+        ambientGain.connect(ambientCtx.destination);
+      }
+
+      if (isAmbientPlaying) {
+        ambientCtx.suspend();
+        isAmbientPlaying = false;
+        ambientIcon.textContent = '🎵';
+        ambientText.textContent = 'Play 432Hz Zen Drone';
+        ambientToggleBtn.classList.remove('text-emerald-400', 'border-emerald-800');
+      } else {
+        buildSoundNodes(soundscapeSelect.value);
+        ambientCtx.resume();
+        isAmbientPlaying = true;
+        ambientIcon.textContent = '⏸️';
+        ambientText.textContent = 'Pause Sound';
+        ambientToggleBtn.classList.add('text-emerald-400', 'border-emerald-800');
+      }
+    }
+
+    ambientToggleBtn.addEventListener('click', toggleAmbientSound);
+
+    soundscapeSelect.addEventListener('change', () => {
+      if (isAmbientPlaying) {
+        buildSoundNodes(soundscapeSelect.value);
+      }
+    });
+
+    soundscapeVolume.addEventListener('input', () => {
+      if (ambientGain && ambientCtx) {
+        ambientGain.gain.setValueAtTime(parseFloat(soundscapeVolume.value), ambientCtx.currentTime);
+      }
+    });
+
+    // Theme toggle
+    function initTheme() {
+      try {
+        const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          themeIcon.textContent = '☀️';
+          themeText.textContent = 'Light Mode';
+        } else {
+          document.documentElement.classList.remove('dark');
+          themeIcon.textContent = '🌙';
+          themeText.textContent = 'Dark Mode';
+        }
+      } catch (e) {}
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      if (isDark) {
+        themeIcon.textContent = '☀️';
+        themeText.textContent = 'Light Mode';
+      } else {
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+      }
+      try {
+        localStorage.setItem(STORAGE_KEY_THEME, isDark ? 'dark' : 'light');
+      } catch (e) {}
+    });
+
+    function checkNotificationStatus() {
+      if (!('Notification' in window)) {
+        notifyPermBtn.classList.add('hidden');
+        return;
+      }
+      if (Notification.permission === 'granted') {
+        notifyText.textContent = 'Alerts Active ✓';
+        notifyPermBtn.classList.add('text-emerald-400', 'border-emerald-800');
+      } else {
+        notifyText.textContent = 'Enable Background Alert';
+        notifyPermBtn.classList.remove('text-emerald-400', 'border-emerald-800');
+      }
+    }
+
+    notifyPermBtn.addEventListener('click', () => {
+      if (!('Notification' in window)) return;
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission().then(() => {
+          checkNotificationStatus();
+        });
+      } else {
+        try {
+          new Notification('Daily Wellness', {
+            body: `Background notifications active for Krish Patel's routines!`
+          });
+        } catch (e) {}
+      }
+    });
+
+    // Initialize state
+    function loadState() {
+      try {
+        const savedTasks = localStorage.getItem(STORAGE_KEY_TASKS);
+        if (savedTasks) tasksState = JSON.parse(savedTasks);
+
+        const savedStreak = localStorage.getItem(STORAGE_KEY_STREAK);
+        if (savedStreak) streakData = JSON.parse(savedStreak);
+
+        const savedJournal = localStorage.getItem(STORAGE_KEY_JOURNAL);
+        if (savedJournal) journalInput.value = savedJournal;
+
+        const savedWater = localStorage.getItem(STORAGE_KEY_WATER);
+        if (savedWater) waterGlasses = JSON.parse(savedWater);
+
+        const savedSplit = localStorage.getItem(STORAGE_KEY_SPLIT);
+        if (savedSplit && WORKOUT_SPLITS[savedSplit]) {
+          currentSplitKey = savedSplit;
+        }
+
+        const savedLed = localStorage.getItem(STORAGE_KEY_LED);
+        if (savedLed) {
+          const parsedLed = JSON.parse(savedLed);
+          currentLedColor = parsedLed.color || currentLedColor;
+          if (parsedLed.active) toggleLedLight();
+        }
+
+        const savedJarvis = localStorage.getItem(STORAGE_KEY_JARVIS);
+        if (savedJarvis) {
+          const parsedJarvis = JSON.parse(savedJarvis);
+          jarvisVoiceEnabled = parsedJarvis.voice !== undefined ? parsedJarvis.voice : true;
+          jarvisVoiceToggle.textContent = jarvisVoiceEnabled ? 'Voice: On' : 'Voice: Muted';
+        }
+      } catch (e) {}
+
+      streakCountEl.textContent = `${streakData.count} Day Streak`;
+      selectWorkoutSplit(currentSplitKey, false);
+      renderWaterTracker();
+      renderWeeklyGrid();
+    }
+
+    initTheme();
+    loadState();
+    renderTimer();
+    checkNotificationStatus();
+    if (presetButtons[0]) {
+      presetButtons[0].classList.add('border-emerald-400', 'text-emerald-300');
+    }
+  </script>
+</body>
+</html>

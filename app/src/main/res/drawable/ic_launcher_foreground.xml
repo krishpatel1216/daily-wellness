@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Glowing sunrise halo / arc -->
+    <path
+        android:pathData="M 32,54 A 22,22 0 0,1 76,54"
+        android:strokeWidth="3.5"
+        android:strokeColor="#F59E0B"
+        android:strokeLineCap="round" />
+
+    <!-- Center sun orb -->
+    <path
+        android:fillColor="#FBBF24"
+        android:pathData="M54,40m-7,0a7,7 0 1,0 14,0a7,7 0 1,0 -14,0" />
+
+    <!-- Morning Sun rays -->
+    <path
+        android:pathData="M54,26 L54,30 M38,32 L41,35 M70,32 L67,35"
+        android:strokeWidth="2.5"
+        android:strokeColor="#F59E0B"
+        android:strokeLineCap="round" />
+
+    <!-- Fitness & Wellness Dumbbell Bar -->
+    <path
+        android:pathData="M34,65 L74,65"
+        android:strokeWidth="4"
+        android:strokeColor="#38BDF8"
+        android:strokeLineCap="round" />
+
+    <!-- Dumbbell weight plates left -->
+    <path
+        android:pathData="M34,57 L34,73 M30,60 L30,70"
+        android:strokeWidth="3.5"
+        android:strokeColor="#0284C7"
+        android:strokeLineCap="round" />
+
+    <!-- Dumbbell weight plates right -->
+    <path
+        android:pathData="M74,57 L74,73 M78,60 L78,70"
+        android:strokeWidth="3.5"
+        android:strokeColor="#0284C7"
+        android:strokeLineCap="round" />
+
+    <!-- Bottom lotus curve / foundation -->
+    <path
+        android:pathData="M38,76 C46,82 62,82 70,76"
+        android:strokeWidth="3"
+        android:strokeColor="#10B981"
+        android:strokeLineCap="round" />
+</vector>

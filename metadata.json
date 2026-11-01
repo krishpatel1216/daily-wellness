@@ -1,0 +1,6 @@
+{
+  "name": "Daily Wellness",
+  "description": "5:00 AM rituals, timed meditation, hydration tracker, 6-day split workouts, and JARVIS voice assistant protocol for Krish Patel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
